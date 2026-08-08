@@ -1,20 +1,28 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
-const mongoose = require('mongoose'); // Make sure mongoose is required if connecting here
+require('dotenv').config();
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// Import your project routes
-const projectRoutes = require('./routes/projectRoutes');
+// 1. Connect to MongoDB database using your .env URI
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB connected successfully'))
+  .catch((err) => console.error('MongoDB connection error:', err));
 
-// Use the project routes for /api/projects
+// 2. Import and mount your project routes
+const projectRoutes = require('./routes/projects'); // Matches your project router file
+const contactRoutes = require('./routes/contact');
+
 app.use('/api/projects', projectRoutes);
+app.use('/api/contact', contactRoutes);
 
-// Root route to check if backend is running
+// Root route to check if server is running
 app.get('/', (req, res) => {
-  res.json({ message: "Backend is running successfully and connected to project routes!" });
+  res.send('Backend is running successfully!');
 });
 
 const PORT = process.env.PORT || 5000;
