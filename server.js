@@ -13,8 +13,8 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected successfully'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
-// 2. Import and mount your project routes
-const projectRoutes = require('./routes/projects'); // Matches your project router file
+// 2. Import and mount your project routes (matching projectRoutes.js)
+const projectRoutes = require('./routes/projectRoutes'); 
 const contactRoutes = require('./routes/contact');
 
 app.use('/api/projects', projectRoutes);
