@@ -5,7 +5,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 1. Keep your project details directly here in server.js
+// Project details array
 const projectsData = [
   {
     "title": "AI Campus Help Desk",
@@ -69,12 +69,12 @@ const projectsData = [
   }
 ];
 
-// Root route to prevent "Cannot GET /"
+// Root route now directly serves the project details JSON
 app.get('/', (req, res) => {
-  res.send('Backend is running successfully!');
+  res.json(projectsData);
 });
 
-// 2. Serve the array when requested
+// Keep /api/projects working as well
 app.get('/api/projects', (req, res) => {
   res.json(projectsData);
 });
