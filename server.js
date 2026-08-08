@@ -1,21 +1,20 @@
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose'); // Make sure mongoose is required if connecting here
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+// Import your project routes
+const projectRoutes = require('./routes/projectRoutes');
 
+// Use the project routes for /api/projects
+app.use('/api/projects', projectRoutes);
 
-
-// Root route now directly serves the project details JSON
+// Root route to check if backend is running
 app.get('/', (req, res) => {
-  res.json(projectsData);
-});
-
-// Keep /api/projects working as well
-app.get('/api/projects', (req, res) => {
-  res.json(projectsData);
+  res.json({ message: "Backend is running successfully and connected to project routes!" });
 });
 
 const PORT = process.env.PORT || 5000;
